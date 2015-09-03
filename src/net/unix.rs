@@ -79,6 +79,13 @@ impl UnixStream {
         self.sys.try_clone()
             .map(From::from)
     }
+
+    pub fn read_recv_fd(&mut self, buf: &mut [u8]) -> io::Result<(usize, Option<RawFd>)> {
+        self.sys.read_recv_fd(buf)
+    }
+    pub fn write_send_fd(&mut self, buf: &[u8], fd: RawFd) -> io::Result<usize> {
+        self.sys.write_send_fd(buf, fd)
+    }
 }
 
 impl Read for UnixStream {
